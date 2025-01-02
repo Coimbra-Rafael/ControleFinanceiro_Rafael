@@ -31,12 +31,14 @@
             this.clienteFormButton = new System.Windows.Forms.Button();
             this.servidorFormButton = new System.Windows.Forms.Button();
             this.ContasReceberTable = new System.Windows.Forms.DataGridView();
+            this.contasReceberFormButton = new System.Windows.Forms.Button();
+            this.contasPagarFormButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ContasReceberTable)).BeginInit();
             this.SuspendLayout();
             // 
             // clienteFormButton
             // 
-            this.clienteFormButton.Location = new System.Drawing.Point(42, 39);
+            this.clienteFormButton.Location = new System.Drawing.Point(2, 2);
             this.clienteFormButton.Name = "clienteFormButton";
             this.clienteFormButton.Size = new System.Drawing.Size(121, 45);
             this.clienteFormButton.TabIndex = 0;
@@ -46,7 +48,7 @@
             // 
             // servidorFormButton
             // 
-            this.servidorFormButton.Location = new System.Drawing.Point(193, 39);
+            this.servidorFormButton.Location = new System.Drawing.Point(129, 2);
             this.servidorFormButton.Name = "servidorFormButton";
             this.servidorFormButton.Size = new System.Drawing.Size(121, 45);
             this.servidorFormButton.TabIndex = 1;
@@ -62,17 +64,39 @@
             this.ContasReceberTable.Size = new System.Drawing.Size(776, 261);
             this.ContasReceberTable.TabIndex = 2;
             // 
+            // contasReceberFormButton
+            // 
+            this.contasReceberFormButton.Location = new System.Drawing.Point(257, 2);
+            this.contasReceberFormButton.Name = "contasReceberFormButton";
+            this.contasReceberFormButton.Size = new System.Drawing.Size(121, 45);
+            this.contasReceberFormButton.TabIndex = 3;
+            this.contasReceberFormButton.Text = "Contas Receber";
+            this.contasReceberFormButton.UseVisualStyleBackColor = true;
+            this.contasReceberFormButton.Click += new System.EventHandler(this.contasReceberFormButton_Click);
+            // 
+            // contasPagarFormButton
+            // 
+            this.contasPagarFormButton.Location = new System.Drawing.Point(384, 2);
+            this.contasPagarFormButton.Name = "contasPagarFormButton";
+            this.contasPagarFormButton.Size = new System.Drawing.Size(121, 45);
+            this.contasPagarFormButton.TabIndex = 4;
+            this.contasPagarFormButton.Text = "Contas Pagar";
+            this.contasPagarFormButton.UseVisualStyleBackColor = true;
+            this.contasPagarFormButton.Click += new System.EventHandler(this.contasPagarFormButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(800, 511);
+            this.Controls.Add(this.contasPagarFormButton);
+            this.Controls.Add(this.contasReceberFormButton);
             this.Controls.Add(this.ContasReceberTable);
             this.Controls.Add(this.servidorFormButton);
             this.Controls.Add(this.clienteFormButton);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Controle Financeiro";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ContasReceberTable)).EndInit();
             this.ResumeLayout(false);
@@ -83,6 +107,8 @@
 
         private System.Windows.Forms.Button clienteFormButton;
         private System.Windows.Forms.Button servidorFormButton;
+        private System.Windows.Forms.Button contasReceberFormButton;
+        private System.Windows.Forms.Button contasPagarFormButton;
         private System.Windows.Forms.DataGridView ContasReceberTable;
     }
 }

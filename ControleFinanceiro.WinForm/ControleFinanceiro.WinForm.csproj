@@ -84,11 +84,24 @@
     <Compile Include="Models\ContasPagar.cs" />
     <Compile Include="Models\ContasReceber.cs" />
     <Compile Include="Models\ServidorClientes.cs" />
+    <Compile Include="Utils\Constantes.cs" />
     <Compile Include="Views\ClientesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\ClientesForm.Designer.cs">
       <DependentUpon>ClientesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContasPagarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ContasPagarForm.Designer.cs">
+      <DependentUpon>ContasPagarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContasReceberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ContasReceberForm.Designer.cs">
+      <DependentUpon>ContasReceberForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>

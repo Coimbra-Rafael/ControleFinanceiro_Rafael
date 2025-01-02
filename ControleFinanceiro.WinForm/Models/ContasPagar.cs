@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ControleFinanceiro.WinForm.Models.Base;
+using System;
 
 namespace ControleFinanceiro.WinForm.Models
 {
-    internal class ContasPagar
+    public class ContasPagar : BaseEntity, IDisposable
     {
+        public long Id { get; set; }
+        public string Descricao { get; set; }
+        public decimal ValorAPagar { get; set; }
+        public long QuantidadeParcelas { get; set; }
+        public DateTime DataAPagar { get; set; }
+        public DateTime DataPagamento { get; set; }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }
