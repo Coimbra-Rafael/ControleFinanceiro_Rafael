@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleFinanceiro.WinForm.Views.Modais;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,25 @@ namespace ControleFinanceiro.WinForm.Views
         public ClientesForm()
         {
             InitializeComponent();
+        }
+
+        private void ClientesForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Incluir_Click(object sender, EventArgs e)
+        {
+            var clienteModal = new ClientesModal();
+            if (clienteModal.ShowDialog() == DialogResult.OK) 
+            {
+                GridFilter().GetAwaiter();
+            }
+        }
+
+        private async Task GridFilter() 
+        {
+            Task.CompletedTask.Wait();
         }
     }
 }

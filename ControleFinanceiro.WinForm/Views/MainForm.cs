@@ -25,7 +25,7 @@ namespace ControleFinanceiro.WinForm.Views
             }
 
             new MainFormDao().CreateDatabaseAndTablesAsync().ConfigureAwait(true).GetAwaiter();
-            FiltroGrid().GetAwaiter();
+            GridFilter().GetAwaiter();
         }
 
         private void ClienteFormButton_Click(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace ControleFinanceiro.WinForm.Views
             clientesForm.ShowDialog();
         }
 
-        private void servidorFormButton_Click(object sender, EventArgs e)
+        private void ServidorFormButton_Click(object sender, EventArgs e)
         {
             this.Hide();
 
@@ -52,7 +52,7 @@ namespace ControleFinanceiro.WinForm.Views
             servidoresForm.ShowDialog();
         }
 
-        private void contasReceberFormButton_Click(object sender, EventArgs e)
+        private void ContasReceberFormButton_Click(object sender, EventArgs e)
         {
             this.Hide();
             ContasReceberForm contasReceberForm = new ContasReceberForm();
@@ -63,7 +63,7 @@ namespace ControleFinanceiro.WinForm.Views
             contasReceberForm.ShowDialog();
         }
 
-        private void contasPagarFormButton_Click(object sender, EventArgs e)
+        private void ContasPagarFormButton_Click(object sender, EventArgs e)
         {
             this.Hide();
             ContasPagarForm contasPagarForm = new ContasPagarForm();
@@ -113,7 +113,7 @@ namespace ControleFinanceiro.WinForm.Views
         #endregion
 
         #region Métodos
-        private async Task FiltroGrid()
+        private async Task GridFilter()
         {
             CreateGridHeaderContasReceberTable(await new MainFormDao().GetContasAReceberAsync());
         }

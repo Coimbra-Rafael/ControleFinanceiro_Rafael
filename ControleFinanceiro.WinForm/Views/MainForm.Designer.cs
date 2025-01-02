@@ -54,7 +54,7 @@
             this.servidorFormButton.TabIndex = 1;
             this.servidorFormButton.Text = "Servidores";
             this.servidorFormButton.UseVisualStyleBackColor = true;
-            this.servidorFormButton.Click += new System.EventHandler(this.servidorFormButton_Click);
+            this.servidorFormButton.Click += new System.EventHandler(this.ServidorFormButton_Click);
             // 
             // ContasReceberTable
             // 
@@ -72,7 +72,7 @@
             this.contasReceberFormButton.TabIndex = 3;
             this.contasReceberFormButton.Text = "Contas Receber";
             this.contasReceberFormButton.UseVisualStyleBackColor = true;
-            this.contasReceberFormButton.Click += new System.EventHandler(this.contasReceberFormButton_Click);
+            this.contasReceberFormButton.Click += new System.EventHandler(this.ContasReceberFormButton_Click);
             // 
             // contasPagarFormButton
             // 
@@ -82,7 +82,7 @@
             this.contasPagarFormButton.TabIndex = 4;
             this.contasPagarFormButton.Text = "Contas Pagar";
             this.contasPagarFormButton.UseVisualStyleBackColor = true;
-            this.contasPagarFormButton.Click += new System.EventHandler(this.contasPagarFormButton_Click);
+            this.contasPagarFormButton.Click += new System.EventHandler(this.ContasPagarFormButton_Click);
             // 
             // MainForm
             // 
