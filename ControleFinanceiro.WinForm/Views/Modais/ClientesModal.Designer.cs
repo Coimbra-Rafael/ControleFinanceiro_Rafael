@@ -38,6 +38,7 @@ namespace ControleFinanceiro.WinForm.Views.Modais
         private TextBox txtBairro;
         private TextBox txtNumero;
         private TextBox txtComplemento;
+        private TextBox txtComplementoPagamento;
 
         private void InitializeComponent()
         {
@@ -50,7 +51,9 @@ namespace ControleFinanceiro.WinForm.Views.Modais
             this.txtBairro = new System.Windows.Forms.TextBox();
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.txtComplemento = new System.Windows.Forms.TextBox();
+            this.txtComplementoPagamento = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
+            this.lblCursor = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtNome
@@ -85,6 +88,35 @@ namespace ControleFinanceiro.WinForm.Views.Modais
             // 
             this.comboBoxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEstado.FormattingEnabled = true;
+            this.comboBoxEstado.Items.AddRange(new object[] {
+            "AC",
+            "AL",
+            "AP",
+            "AM",
+            "BA",
+            "CE",
+            "DF",
+            "ES",
+            "GO",
+            "MA",
+            "MT",
+            "MS",
+            "MG",
+            "PA",
+            "PB",
+            "PR",
+            "PE",
+            "PI",
+            "RJ",
+            "RN",
+            "RS",
+            "RO",
+            "RR",
+            "SC",
+            "SP",
+            "SE",
+            "TO"});
+            this.comboBoxEstado.SelectedIndex = 0;
             this.comboBoxEstado.Location = new System.Drawing.Point(100, 150);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(200, 21);
@@ -118,22 +150,41 @@ namespace ControleFinanceiro.WinForm.Views.Modais
             this.txtComplemento.Size = new System.Drawing.Size(200, 20);
             this.txtComplemento.TabIndex = 8;
             // 
+            // txtComplementoPagamento
+            // 
+            this.txtComplementoPagamento.Location = new System.Drawing.Point(100, 307);
+            this.txtComplementoPagamento.Multiline = true;
+            this.txtComplementoPagamento.Name = "txtComplementoPagamento";
+            this.txtComplementoPagamento.Size = new System.Drawing.Size(200, 83);
+            this.txtComplementoPagamento.TabIndex = 10;
+            // 
             // btnSalvar
             // 
             this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnSalvar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSalvar.Location = new System.Drawing.Point(100, 310);
+            this.btnSalvar.Location = new System.Drawing.Point(100, 400);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(100, 30);
-            this.btnSalvar.TabIndex = 9;
+            this.btnSalvar.TabIndex = 11;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
+            // lblCursor
+            // 
+            this.lblCursor.AutoSize = true;
+            this.lblCursor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
+            this.lblCursor.Location = new System.Drawing.Point(13, 387);
+            this.lblCursor.Name = "lblCursor";
+            this.lblCursor.Size = new System.Drawing.Size(47, 13);
+            this.lblCursor.TabIndex = 12;
+            this.lblCursor.Text = "lblCursor";
+            // 
             // ClientesModal
             // 
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(400, 352);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
+            this.ClientSize = new System.Drawing.Size(400, 450);
+            this.Controls.Add(this.lblCursor);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtTelefone);
@@ -143,6 +194,7 @@ namespace ControleFinanceiro.WinForm.Views.Modais
             this.Controls.Add(this.txtBairro);
             this.Controls.Add(this.txtNumero);
             this.Controls.Add(this.txtComplemento);
+            this.Controls.Add(this.txtComplementoPagamento);
             this.Controls.Add(this.btnSalvar);
             this.Name = "ClientesModal";
             this.Text = "Cadastro de Cliente";
@@ -155,5 +207,6 @@ namespace ControleFinanceiro.WinForm.Views.Modais
         #endregion
 
         private Button btnSalvar;
+        private Label lblCursor;
     }
 }

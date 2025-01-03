@@ -28,14 +28,15 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                 (
                                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     Nome TEXT NOT NULL,
-                                    Email TEXT NOT NULL,
-                                    Telefone TEXT NOT NULL,
-                                    Cidade TEXT NOT NULL,
-                                    Estado TEXT NOT NULL,
-                                    Endereco TEXT NOT NULL,
-                                    Bairro TEXT NOT NULL,
-                                    Numero TEXT NOT NULL,
+                                    Email TEXT,
+                                    Telefone TEXT,
+                                    Cidade TEXT,
+                                    Estado TEXT,
+                                    Endereco TEXT,
+                                    Bairro TEXT,
+                                    Numero TEXT,
                                     Complemento TEXT,
+                                    ComplementoPagamento TEXT,
                                     CreatedOn DATETIME,
                                     UpdateOn DATETIME
                                 )", connection)
