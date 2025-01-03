@@ -35,8 +35,13 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                     Endereco TEXT NOT NULL,
                                     Bairro TEXT NOT NULL,
                                     Numero TEXT NOT NULL,
-                                    Complemento TEXT
-                                )", connection))
+                                    Complemento TEXT,
+                                    CreatedOn DATETIME,
+                                    UpdateOn DATETIME
+                                )", connection)
+                    {
+
+                    })
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -46,7 +51,9 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                         @"CREATE TABLE IF NOT EXISTS Servidor
                             (
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Nome TEXT NOT NULL
+                                Nome TEXT NOT NULL,
+                                CreatedOn DATETIME,
+                                UpdateOn DATETIME
                             )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
@@ -76,6 +83,8 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                 DataAReceber TEXT NOT NULL,
                                 DataRecebimento TEXT NOT NULL,
                                 Observacao TEXT,
+                                CreatedOn DATETIME,
+                                UpdateOn DATETIME,
                                 FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
                             )", connection))
                     {
@@ -91,7 +100,9 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                 ValorAPagar REAL NOT NULL,
                                 QuantidadeParcelas INTEGER NOT NULL,
                                 DataAPagar TEXT NOT NULL,
-                                DataPagamento TEXT NOT NULL
+                                DataPagamento TEXT NOT NULL,
+                                CreatedOn DATETIME,
+                                UpdateOn DATETIME
                             )", connection))
                     {
                         await command.ExecuteNonQueryAsync();

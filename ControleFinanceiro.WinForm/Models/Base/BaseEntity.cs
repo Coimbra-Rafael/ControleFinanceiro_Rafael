@@ -4,8 +4,8 @@ namespace ControleFinanceiro.WinForm.Models.Base
 {
     public abstract class BaseEntity
     {
-        protected DateTime CreatedOn { get; set; }
-        protected DateTime UpdateOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdateOn { get; set; }
 
         protected BaseEntity()
         {

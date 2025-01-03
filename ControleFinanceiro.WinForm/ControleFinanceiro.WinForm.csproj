@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessObject\ClientesDao.cs" />
     <Compile Include="DataAccessObject\MainFormDao.cs" />
     <Compile Include="Models\ContasPagar.cs" />
     <Compile Include="Models\ContasReceber.cs" />
@@ -141,6 +142,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Modais\ClientesModal.resx">
+      <DependentUpon>ClientesModal.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ControleFinanceiro.WinForm.DataAccessObject.MainFormDao.datasource" />
     <None Include="Properties\DataSources\ControleFinanceiro.WinForm.Models.Base.BaseEntity.datasource" />

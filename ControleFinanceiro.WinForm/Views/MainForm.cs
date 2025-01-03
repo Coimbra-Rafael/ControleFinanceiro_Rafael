@@ -24,8 +24,11 @@ namespace ControleFinanceiro.WinForm.Views
                 Directory.CreateDirectory(Constantes.CaminhoDatabase);
             }
 
-            new MainFormDao().CreateDatabaseAndTablesAsync().ConfigureAwait(true).GetAwaiter();
-            GridFilter().GetAwaiter();
+            using (var mainFormDao = new MainFormDao())
+            {
+                mainFormDao.CreateDatabaseAndTablesAsync().ConfigureAwait(true).GetAwaiter();
+                GridFilter(mainFormDao).GetAwaiter();
+            }
         }
 
         private void ClienteFormButton_Click(object sender, EventArgs e)
@@ -113,9 +116,16 @@ namespace ControleFinanceiro.WinForm.Views
         #endregion
 
         #region Métodos
-        private async Task GridFilter()
+        private async Task GridFilter(MainFormDao mainFormDao = null)
         {
-            CreateGridHeaderContasReceberTable(await new MainFormDao().GetContasAReceberAsync());
+            if (!mainFormDao.Equals(null))
+            {
+                CreateGridHeaderContasReceberTable(await mainFormDao.GetContasAReceberAsync());
+            }
+            else 
+            {
+                CreateGridHeaderContasReceberTable(await new MainFormDao().GetContasAReceberAsync());
+            }
         }
         #endregion
     }
