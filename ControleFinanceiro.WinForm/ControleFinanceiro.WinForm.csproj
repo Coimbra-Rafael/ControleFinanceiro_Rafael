@@ -86,6 +86,7 @@
     <Compile Include="Models\ContasReceber.cs" />
     <Compile Include="Models\ServidorClientes.cs" />
     <Compile Include="Utils\Constantes.cs" />
+    <Compile Include="Utils\ConfigTextBox.cs" />
     <Compile Include="Views\ClientesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +131,12 @@
     <EmbeddedResource Include="Views\ClientesForm.resx">
       <DependentUpon>ClientesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ContasPagarForm.resx">
+      <DependentUpon>ContasPagarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ContasReceberForm.resx">
+      <DependentUpon>ContasReceberForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +151,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Modais\ClientesModal.resx">
       <DependentUpon>ClientesModal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ServidoresForm.resx">
+      <DependentUpon>ServidoresForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ControleFinanceiro.WinForm.DataAccessObject.MainFormDao.datasource" />

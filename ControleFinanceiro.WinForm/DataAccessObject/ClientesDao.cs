@@ -1,5 +1,6 @@
 ﻿using ControleFinanceiro.WinForm.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SQLite;
 using System.Threading.Tasks;
@@ -14,13 +15,14 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
 
         public async Task<bool> CustomerRegistration(Clientes cliente)
         {
+
             using (var connection = new SQLiteConnection(ConnectionString))
             {
                 await connection.OpenAsync();
 
                 using (SQLiteCommand command = new SQLiteCommand(@"
-                        INSERT INTO Clientes (Nome, Email, Telefone, Cidade, Estado, Endereco, Bairro, Numero, Complemento, CreatedOn, UpdateOn)
-                        VALUES (@Nome, @Email, @Telefone, @Cidade, @Estado, @Endereco, @Bairro, @Numero, @Complemento, @CreatedOn, @UpdateOn)", connection))
+                        INSERT INTO Clientes (Nome, Email, Telefone, Cidade, Estado, Endereco, Bairro, Numero, Complemento, ComplementoPagamento, CreatedOn, UpdateOn)
+                        VALUES (@Nome, @Email, @Telefone, @Cidade, @Estado, @Endereco, @Bairro, @Numero, @Complemento, @ComplementoPagamento, @CreatedOn, @UpdateOn)", connection))
                 {
                     command.Parameters.AddWithValue("@Nome", cliente.Nome);
                     command.Parameters.AddWithValue("@Email", cliente.Email);
@@ -34,6 +36,10 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                                 string.IsNullOrEmpty(cliente.Complemento)
                                                 ? DBNull.Value
                                                 : (object)cliente.Complemento);
+                    command.Parameters.AddWithValue("@ComplementoPagamento",
+                                                string.IsNullOrEmpty(cliente.ComplementoPagamento)
+                                                ? DBNull.Value
+                                                : (object)cliente.ComplementoPagamento);
                     command.Parameters.AddWithValue("@CreatedOn", cliente.CreatedOn);
                     command.Parameters.AddWithValue("@UpdateOn", cliente.UpdateOn);
 
@@ -44,6 +50,169 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
         }
 
+        public async Task<bool> DeleteClientAsync(long clienteId) 
+        {
+            using (var connection = new SQLiteConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+
+                using (SQLiteCommand command = new SQLiteCommand(
+                    @"DELETE FROM Clientes WHERE Id = @Id", connection))
+                {
+                    command.Parameters.AddWithValue("@Id", clienteId);
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public async Task<IEnumerable<Clientes>> GetClientesAsync(string nome = null, string complemento = null) 
+        {
+            using (var connection = new SQLiteConnection(ConnectionString)) 
+            {
+                await connection.OpenAsync();
+                using (var command = new SQLiteCommand(
+                    @"SELECT * FROM Clientes", connection)) 
+                {
+                    var clientes = new List<Clientes>();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            return clientes; // Retorna lista vazia se não houver registros
+                        }
+
+                        while (await reader.ReadAsync())
+                        {
+                            var cliente = new Clientes()
+                            {
+                                Id = Convert.ToInt64(reader["Id"]),
+                                Nome = reader["Nome"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Telefone = reader["Telefone"].ToString(),
+                                Cidade = reader["Cidade"].ToString(),
+                                Estado = reader["Estado"].ToString(),
+                                Endereco = reader["Endereco"].ToString(),
+                                Bairro = reader["Bairro"].ToString(),
+                                Numero = reader["Numero"].ToString(),
+                                Complemento = reader["Complemento"].ToString(),
+                                ComplementoPagamento = reader["ComplementoPagamento"].ToString(),
+                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"]),
+                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"])
+                            };
+
+
+                            clientes.Add(cliente);
+                        }
+                        return clientes;
+                    }
+                }
+            }
+        }
+
+        public async Task<IEnumerable<Clientes>> GetClientesByFilterAsync(string valorPesquisa, bool buscaPorComplementoPagamento) 
+        {
+            using (var connection = new SQLiteConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                string query = "SELECT * FROM Clientes";
+
+                if (buscaPorComplementoPagamento)
+                {
+                    query += " WHERE ComplementoPagamento LIKE @ValorPesquisa";
+                }
+                else 
+                {
+                    query += " WHERE Nome LIKE @ValorPesquisa";
+                }
+
+                using (var command = new SQLiteCommand(
+                    query, connection))
+                {
+                    command.Parameters.AddWithValue("@ValorPesquisa", $"%{valorPesquisa}%");
+
+                    var clientes = new List<Clientes>();
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            return clientes; // Retorna lista vazia se não houver registros
+                        }
+
+                        while (await reader.ReadAsync())
+                        {
+                            var cliente = new Clientes()
+                            {
+                                Id = Convert.ToInt64(reader["Id"]),
+                                Nome = reader["Nome"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Telefone = reader["Telefone"].ToString(),
+                                Cidade = reader["Cidade"].ToString(),
+                                Estado = reader["Estado"].ToString(),
+                                Endereco = reader["Endereco"].ToString(),
+                                Bairro = reader["Bairro"].ToString(),
+                                Numero = reader["Numero"].ToString(),
+                                Complemento = reader["Complemento"].ToString(),
+                                ComplementoPagamento = reader["ComplementoPagamento"].ToString(),
+                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"]),
+                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"])
+                            };
+
+
+                            clientes.Add(cliente);
+                        }
+                        return clientes;
+                    }
+                }
+            }
+        }
+
+        public async Task<Clientes> GetClienteById(long clienteId)
+        {
+            using (var connection = new SQLiteConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new SQLiteCommand(
+                    @"SELECT * FROM Clientes where Id = @Id", connection))
+                {
+                    command.Parameters.AddWithValue("@Id", clienteId);
+
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            throw new Exception("Não foi encontrado nenhum cliente."); // Retorna lista vazia se não houver registros
+                        }
+
+                        if (await reader.ReadAsync())
+                        {
+                            var cliente = new Clientes()
+                            {
+                                Id = Convert.ToInt64(reader["Id"]),
+                                Nome = reader["Nome"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Telefone = reader["Telefone"].ToString(),
+                                Cidade = reader["Cidade"].ToString(),
+                                Estado = reader["Estado"].ToString(),
+                                Endereco = reader["Endereco"].ToString(),
+                                Bairro = reader["Bairro"].ToString(),
+                                Numero = reader["Numero"].ToString(),
+                                Complemento = reader["Complemento"].ToString(),
+                                ComplementoPagamento = reader["ComplementoPagamento"].ToString(),
+                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"]),
+                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"])
+                            };
+
+
+                            return cliente;
+                        }
+                        return default;
+                    }
+                }
+            }
+        }
 
         public void Dispose()
         {
