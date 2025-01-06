@@ -28,7 +28,7 @@ namespace ControleFinanceiro.WinForm.Views.Modais
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private System.ComponentModel.IContainer container;
+        
         private TextBox txtNome;
         private TextBox txtEmail;
         private TextBox txtTelefone;

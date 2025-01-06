@@ -2,7 +2,7 @@
 
 namespace ControleFinanceiro.WinForm.Models
 {
-    public class ServidorClientes : IDisposable
+    public sealed class ServidorClientes : IDisposable
     {
         public long ServidorId { get; set; }
         public long ClienteId { get; set; }

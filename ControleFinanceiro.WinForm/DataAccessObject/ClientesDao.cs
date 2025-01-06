@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.WinForm.DataAccessObject
 {
-    public class ClientesDao : IDisposable
+    public sealed class ClientesDao : IDisposable
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["SQLiteConnectionString"].ConnectionString;
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["SQLite_connectionString"].ConnectionString;
 
-        private string ConnectionString => _connectionString;
 
         public async Task<bool> CustomerRegistration(Clientes cliente)
         {
 
-            using (var connection = new SQLiteConnection(ConnectionString))
+            using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
@@ -50,9 +49,30 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
         }
 
-        public async Task<bool> DeleteClientAsync(long clienteId) 
+        public async Task<bool> UpdateClientAsync(Clientes clientes, string propriedadeAlterada)
         {
-            using (var connection = new SQLiteConnection(ConnectionString))
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                string query = $"UPDATE Clientes SET {propriedadeAlterada} = @{propriedadeAlterada} WHERE Id = @Id";
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue($"@{propriedadeAlterada}",
+                        typeof(Clientes).GetProperty(propriedadeAlterada)?.GetValue(clientes));
+
+                    command.Parameters.AddWithValue("@Id", clientes.Id);
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public async Task<bool> DeleteClientAsync(long clienteId)
+        {
+            using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
@@ -67,13 +87,13 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
         }
 
-        public async Task<IEnumerable<Clientes>> GetClientesAsync(string nome = null, string complemento = null) 
+        public async Task<IEnumerable<Clientes>> GetClientesAsync(string nome = null, string complemento = null)
         {
-            using (var connection = new SQLiteConnection(ConnectionString)) 
+            using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 using (var command = new SQLiteCommand(
-                    @"SELECT * FROM Clientes", connection)) 
+                    @"SELECT * FROM Clientes", connection))
                 {
                     var clientes = new List<Clientes>();
                     using (var reader = await command.ExecuteReaderAsync())
@@ -111,9 +131,9 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
         }
 
-        public async Task<IEnumerable<Clientes>> GetClientesByFilterAsync(string valorPesquisa, bool buscaPorComplementoPagamento) 
+        public async Task<IEnumerable<Clientes>> GetClientesByFilterAsync(string valorPesquisa, bool buscaPorComplementoPagamento)
         {
-            using (var connection = new SQLiteConnection(ConnectionString))
+            using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 string query = "SELECT * FROM Clientes";
@@ -122,7 +142,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 {
                     query += " WHERE ComplementoPagamento LIKE @ValorPesquisa";
                 }
-                else 
+                else
                 {
                     query += " WHERE Nome LIKE @ValorPesquisa";
                 }
@@ -170,7 +190,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
 
         public async Task<Clientes> GetClienteById(long clienteId)
         {
-            using (var connection = new SQLiteConnection(ConnectionString))
+            using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
                 using (var command = new SQLiteCommand(
@@ -183,12 +203,12 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     {
                         if (!reader.HasRows)
                         {
-                            throw new Exception("Não foi encontrado nenhum cliente."); // Retorna lista vazia se não houver registros
+                            throw new ArgumentException("Não foi encontrado nenhum cliente."); // Retorna lista vazia se não houver registros
                         }
 
                         if (await reader.ReadAsync())
                         {
-                            var cliente = new Clientes()
+                            return new Clientes()
                             {
                                 Id = Convert.ToInt64(reader["Id"]),
                                 Nome = reader["Nome"].ToString(),
@@ -204,9 +224,6 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                                 CreatedOn = Convert.ToDateTime(reader["CreatedOn"]),
                                 UpdateOn = Convert.ToDateTime(reader["UpdateOn"])
                             };
-
-
-                            return cliente;
                         }
                         return default;
                     }

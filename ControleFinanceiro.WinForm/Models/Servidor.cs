@@ -3,10 +3,12 @@ using System;
 
 namespace ControleFinanceiro.WinForm.Models
 {
-    public class Servidor : BaseEntity, IDisposable
+    public sealed class Servidor : BaseEntity, IDisposable
     {
         public long Id { get; set; }
         public string Nome { get; set; }
+
+        public Servidor() : base() { }
 
         public Servidor(string nome) : base()
         {

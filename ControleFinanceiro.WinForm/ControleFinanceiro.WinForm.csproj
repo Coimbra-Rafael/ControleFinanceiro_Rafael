@@ -82,11 +82,13 @@
   <ItemGroup>
     <Compile Include="DataAccessObject\ClientesDao.cs" />
     <Compile Include="DataAccessObject\MainFormDao.cs" />
+    <Compile Include="DataAccessObject\ServidorDao.cs" />
     <Compile Include="Models\ContasPagar.cs" />
     <Compile Include="Models\ContasReceber.cs" />
     <Compile Include="Models\ServidorClientes.cs" />
     <Compile Include="Utils\Constantes.cs" />
     <Compile Include="Utils\ConfigTextBox.cs" />
+    <Compile Include="Utils\Generics.cs" />
     <Compile Include="Views\ClientesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +123,12 @@
     </Compile>
     <Compile Include="Views\Modais\ClientesModal.Designer.cs">
       <DependentUpon>ClientesModal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Modais\ServidoresModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Modais\ServidoresModal.Designer.cs">
+      <DependentUpon>ServidoresModal.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ServidoresForm.cs">
       <SubType>Form</SubType>

@@ -3,7 +3,6 @@ using ControleFinanceiro.WinForm.Models;
 using ControleFinanceiro.WinForm.Utils;
 using System;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ControleFinanceiro.WinForm.Views.Modais
 {
@@ -112,19 +111,48 @@ namespace ControleFinanceiro.WinForm.Views.Modais
                 ComplementoPagamento = txtComplementoPagamento.Text
             };
 
+
             using (var clienteDao = new ClientesDao())
             {
-                var result = clienteDao.CustomerRegistration(cliente).ConfigureAwait(true).GetAwaiter().GetResult();
-
-                if (result)
+                bool result = false;
+                Clientes clienteAntigo = null;
+                if (clienteId != 0)
                 {
-                    MessageBox.Show("Cliente cadastrado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    clienteAntigo = clienteDao.GetClienteById(clienteId).ConfigureAwait(true).GetAwaiter().GetResult();
+                    cliente.Id = clienteAntigo.Id;
+                }
+
+                if (clienteAntigo == null)
+                {
+                    result = clienteDao.CustomerRegistration(cliente).ConfigureAwait(true).GetAwaiter().GetResult();
+
+                    if (result)
+                    {
+                        MessageBox.Show("Cliente cadastrado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao cadastrar cliente, verifique os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Erro ao cadastrar cliente, verifique os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var propriedadesAlteradas = Generics.GetChangedProperties(clienteAntigo, cliente);
+                    foreach (var propriedade in propriedadesAlteradas)
+                    {
+                        result = clienteDao.UpdateClientAsync(cliente, propriedade).ConfigureAwait(true).GetAwaiter().GetResult();
 
+                        if (!result)
+                        {
+                            MessageBox.Show($"Erro ao atualizar a propriedade {propriedade}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
+                    MessageBox.Show("Cliente atualizado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
                 }
             }
 

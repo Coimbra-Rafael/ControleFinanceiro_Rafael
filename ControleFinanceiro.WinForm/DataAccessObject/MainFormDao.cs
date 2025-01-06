@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.WinForm.DataAccessObject
 {
-    public class MainFormDao : IDisposable
+    public sealed class MainFormDao : IDisposable
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["SQLiteConnectionString"].ConnectionString;
-
-        private string ConnectionString => _connectionString;
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["SQLite_connectionString"].ConnectionString;
 
         public async Task CreateDatabaseAndTablesAsync()
         {
             try
             {
-                using (var connection = new SQLiteConnection(ConnectionString))
+                using (var connection = new SQLiteConnection(_connectionString))
                 {
                     // Abre a conexão
                     await connection.OpenAsync();
@@ -113,7 +111,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             catch (Exception ex)
             {
                 // Exceção capturada e jogada novamente
-                throw new ApplicationException("Erro ao criar banco de dados e tabelas.", ex);
+                throw new ArgumentException("Erro ao criar banco de dados e tabelas.", ex);
             }
         }
 
@@ -121,7 +119,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
         {
             try
             {
-                using (var connection = new SQLiteConnection(ConnectionString))
+                using (var connection = new SQLiteConnection(_connectionString))
                 {
                     await connection.OpenAsync();
 
@@ -158,7 +156,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Erro ao obter contas a receber.", ex);
+                throw new ArgumentException("Erro ao obter contas a receber.", ex);
             }
         }
 

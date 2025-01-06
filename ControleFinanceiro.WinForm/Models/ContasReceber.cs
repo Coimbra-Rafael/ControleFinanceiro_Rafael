@@ -3,7 +3,7 @@ using System;
 
 namespace ControleFinanceiro.WinForm.Models
 {
-    public class ContasReceber : BaseEntity, IDisposable
+    public sealed class ContasReceber : BaseEntity, IDisposable
     {
         public long Id { get; set; }
         public long ClienteId { get; set; }

@@ -26,9 +26,12 @@ namespace ControleFinanceiro.WinForm.Views
 
         private void Incluir_Click(object sender, EventArgs e)
         {
-            var clienteModal = new ClientesModal();
-            clienteModal.ShowDialog();
-            GridFilter().ConfigureAwait(true).GetAwaiter();
+            using (var clientesModal = new ClientesModal()) 
+            {
+                clientesModal.ShowDialog();
+                GridFilter().ConfigureAwait(true).GetAwaiter();
+            }
+                
 
         }
 
@@ -40,13 +43,12 @@ namespace ControleFinanceiro.WinForm.Views
                 return;
             }
 
-            int clienteId = Convert.ToInt32(clienteGridView.SelectedRows[0].Cells[0].Value);
-
-            var clienteModal = new ClientesModal(clienteId);
-            if (clienteModal.ShowDialog() == DialogResult.OK)
+            using (var clientesModal = new ClientesModal(Convert.ToInt32(clienteGridView.SelectedRows[0].Cells[0].Value)))
             {
+                clientesModal.ShowDialog();
                 GridFilter().ConfigureAwait(true).GetAwaiter();
             }
+
         }
 
         private async void excluir_Click(object sender, EventArgs e)
@@ -141,7 +143,7 @@ namespace ControleFinanceiro.WinForm.Views
             using (var clienteDao = new ClientesDao())
             {
                 IEnumerable<Clientes> clientes;
-                if (txtPesquisa.Text.Equals("Pesquisar") || string.IsNullOrEmpty(txtPesquisa.Text))
+                if (txtPesquisa.Text.Equals("Pesquisar") && !chkBuscaPorComplemento.Checked  || string.IsNullOrEmpty(txtPesquisa.Text) && !chkBuscaPorComplemento.Checked)
                 {
                     clientes = await clienteDao.GetClientesAsync();
                 }

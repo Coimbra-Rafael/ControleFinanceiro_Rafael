@@ -3,7 +3,7 @@ using System;
 
 namespace ControleFinanceiro.WinForm.Models
 {
-    public class Clientes : BaseEntity, IDisposable
+    public sealed class Clientes : BaseEntity, IDisposable
     {
         public long Id { get; set; } 
         //Propriedades do cliente
