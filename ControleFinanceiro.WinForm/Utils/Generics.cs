@@ -5,7 +5,7 @@ namespace ControleFinanceiro.WinForm.Utils
 {
     public static class Generics 
     {
-        public static IEnumerable<string> GetChangedProperties<T>(T clienteAntigo, T clienteNovo)
+        public static IEnumerable<string> GetChangedProperties<T>(T oldObject, T newObject)
         {
             var propriedadesAlteradas = new List<string>();
 
@@ -13,10 +13,10 @@ namespace ControleFinanceiro.WinForm.Utils
 
             foreach (var propriedade in propriedades)
             {
-                var valorAntigo = propriedade.GetValue(clienteAntigo)?.ToString() ?? string.Empty;
-                var valorNovo = propriedade.GetValue(clienteNovo)?.ToString() ?? string.Empty;
+                var oldValue = propriedade.GetValue(oldObject)?.ToString() ?? string.Empty;
+                var newValue = propriedade.GetValue(newObject)?.ToString() ?? string.Empty;
 
-                if (!valorAntigo.Equals(valorNovo))
+                if (!oldValue.Equals(newValue))
                 {
                     propriedadesAlteradas.Add(propriedade.Name);
                 }

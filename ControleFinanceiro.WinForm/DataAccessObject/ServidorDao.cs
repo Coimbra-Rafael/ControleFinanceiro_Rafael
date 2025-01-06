@@ -28,7 +28,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 }
             }
         }
-        public async Task<bool> UpdateServerAsync(Servidor clientes, string propriedadeAlterada)
+        public async Task<bool> UpdateServerAsync(Servidor server, string propriedadeAlterada)
         {
             using (var connection = new SQLiteConnection(_connectionString))
             {
@@ -39,9 +39,9 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue($"@{propriedadeAlterada}",
-                        typeof(Clientes).GetProperty(propriedadeAlterada)?.GetValue(clientes));
+                        typeof(Clientes).GetProperty(propriedadeAlterada)?.GetValue(server));
 
-                    command.Parameters.AddWithValue("@Id", clientes.Id);
+                    command.Parameters.AddWithValue("@Id", server.Id);
 
                     int rowsAffected = await command.ExecuteNonQueryAsync();
                     return rowsAffected > 0;
