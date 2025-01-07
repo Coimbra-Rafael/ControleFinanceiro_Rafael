@@ -49,7 +49,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             }
         }
 
-        public async Task<bool> DeleteClientAsync(long serverId)
+        public async Task<bool> DeleteServerAsync(long serverId)
         {
             using (var connection = new SQLiteConnection(_connectionString))
             {

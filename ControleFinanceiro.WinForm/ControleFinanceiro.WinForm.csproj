@@ -160,6 +160,9 @@
     <EmbeddedResource Include="Views\Modais\ClientesModal.resx">
       <DependentUpon>ClientesModal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Modais\ServidoresModal.resx">
+      <DependentUpon>ServidoresModal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ServidoresForm.resx">
       <DependentUpon>ServidoresForm.cs</DependentUpon>
     </EmbeddedResource>
