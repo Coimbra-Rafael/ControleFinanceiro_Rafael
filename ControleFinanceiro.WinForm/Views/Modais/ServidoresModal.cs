@@ -2,13 +2,6 @@
 using ControleFinanceiro.WinForm.Models;
 using ControleFinanceiro.WinForm.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ControleFinanceiro.WinForm.Views.Modais
@@ -35,22 +28,22 @@ namespace ControleFinanceiro.WinForm.Views.Modais
             {
                 var cliente = servidorDao.GetServerByIdAsync(serverId).ConfigureAwait(true).GetAwaiter().GetResult();
                 ConfigTextBox.ClearingReservedSpace(txtNome, "Nome");
-               
+
                 if (cliente != null)
                 {
                     txtNome.Text = cliente.Nome;
-                   
+
                 }
             }
         }
 
         private void ServidoresModal_Load(object sender, EventArgs e)
         {
-           
+
             if (serverId.Equals(0))
             {
                 ConfigTextBox.SetPlaceholder(txtNome, "Nome");
-              
+
             }
             else
             {
@@ -58,7 +51,7 @@ namespace ControleFinanceiro.WinForm.Views.Modais
                 {
                     ConfigTextBox.SetPlaceholder(txtNome, "Nome");
                 }
-              
+
             }
             this.ActiveControl = lblCursor;
         }

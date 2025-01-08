@@ -124,6 +124,12 @@
     <Compile Include="Views\Modais\ClientesModal.Designer.cs">
       <DependentUpon>ClientesModal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Modais\ContasReceberModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Modais\ContasReceberModal.Designer.cs">
+      <DependentUpon>ContasReceberModal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modais\ServidoresModal.cs">
       <SubType>Form</SubType>
     </Compile>

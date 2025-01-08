@@ -47,7 +47,7 @@ namespace ControleFinanceiro.WinForm.Views
         {
             if (servidorGridView.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Selecione um cliente para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Selecione um servidor para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -65,13 +65,13 @@ namespace ControleFinanceiro.WinForm.Views
                     var resultDelete = servidorDao.DeleteServerAsync(serverId).ConfigureAwait(true).GetAwaiter().GetResult();
                     if (resultDelete)
                     {
-                        MessageBox.Show("Cliente excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Servidor excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         GridFilter().ConfigureAwait(true).GetAwaiter();
                     }
                     else
                     {
-                        MessageBox.Show("Erro ao excluir cliente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Erro ao excluir servidor.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace ControleFinanceiro.WinForm.Views
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
-
+            GridFilter().ConfigureAwait(true).GetAwaiter();
         }
 
 
