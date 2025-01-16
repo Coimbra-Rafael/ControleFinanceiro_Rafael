@@ -118,14 +118,8 @@ namespace ControleFinanceiro.WinForm.Views
         #region Métodos
         private async Task GridFilter(MainFormDao mainFormDao = null)
         {
-            if (!mainFormDao.Equals(null))
-            {
-                CreateGridHeaderContasReceberTable(await mainFormDao.GetContasAReceberAsync());
-            }
-            else 
-            {
-                CreateGridHeaderContasReceberTable(await new MainFormDao().GetContasAReceberAsync());
-            }
+           ContasReceberTable.DataSource = await new ContasReceberDao().GetContasAReceberAsync();
+          
         }
         #endregion
     }

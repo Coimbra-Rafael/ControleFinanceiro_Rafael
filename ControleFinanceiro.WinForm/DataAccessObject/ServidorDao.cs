@@ -16,7 +16,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             using (var connection = new SQLiteConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                using (var command = new SQLiteCommand("@INSERT INTO Servidor (Nome, CreatedOn, UpdateOn) VALUES (@Nome, @CreatedOn, @UpdateOn)", connection))
+                using (var command = new SQLiteCommand(@"INSERT INTO Servidor (Nome, CreatedOn, UpdateOn) VALUES (@Nome, @CreatedOn, @UpdateOn)", connection))
                 {
                     command.Parameters.AddWithValue("@Nome", servidor.Nome);
                     command.Parameters.AddWithValue("@CreatedOn", servidor.CreatedOn);
@@ -28,6 +28,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 }
             }
         }
+
         public async Task<bool> UpdateServerAsync(Servidor server, string propriedadeAlterada)
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -38,9 +39,10 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue($"@{propriedadeAlterada}",
-                        typeof(Clientes).GetProperty(propriedadeAlterada)?.GetValue(server));
+                    var propertyValue = typeof(Servidor).GetProperty(propriedadeAlterada)?.GetValue(server);
+                    if (propertyValue == null) return false;
 
+                    command.Parameters.AddWithValue($"@{propriedadeAlterada}", propertyValue);
                     command.Parameters.AddWithValue("@Id", server.Id);
 
                     int rowsAffected = await command.ExecuteNonQueryAsync();
@@ -55,8 +57,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             {
                 await connection.OpenAsync();
 
-                using (SQLiteCommand command = new SQLiteCommand(
-                    @"DELETE FROM Servidor WHERE Id = @Id", connection))
+                using (SQLiteCommand command = new SQLiteCommand(@"DELETE FROM Servidor WHERE Id = @Id", connection))
                 {
                     command.Parameters.AddWithValue("@Id", serverId);
                     int rowsAffected = await command.ExecuteNonQueryAsync();
@@ -75,24 +76,21 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 using (SQLiteCommand command = new SQLiteCommand(@"SELECT * FROM Servidor", connection))
                 {
                     var servidores = new List<Servidor>();
-                    using (var reader = await command.ExecuteReaderAsync()) 
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        if (!reader.HasRows) 
-                        {
-                            throw new ArgumentException("Não foi encontrado nenhum servidor.");
-                        }
-
-                        while(await reader.ReadAsync()) 
+                        while (await reader.ReadAsync())
                         {
                             var servidor = new Servidor
                             {
+                                Id = Convert.ToInt64(reader["Id"].ToString()),
                                 Nome = reader["Nome"].ToString(),
-                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"].ToString()),
-                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"].ToString())
+                                CreatedOn = reader["CreatedOn"] as DateTime? ?? DateTime.MinValue,
+                                UpdateOn = reader["UpdateOn"] as DateTime? ?? DateTime.MinValue
                             };
 
                             servidores.Add(servidor);
                         }
+
                         return servidores;
                     }
                 }
@@ -105,28 +103,24 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
             {
                 await connection.OpenAsync();
 
-                using (SQLiteCommand command = new SQLiteCommand(@"SELECT * FROM Servidor Where Id = @Id", connection))
+                using (SQLiteCommand command = new SQLiteCommand(@"SELECT * FROM Servidor WHERE Id = @Id", connection))
                 {
                     command.Parameters.AddWithValue("@Id", serverId);
 
-
                     using (var reader = await command.ExecuteReaderAsync())
                     {
-                        if (!reader.HasRows)
-                        {
-                            throw new ArgumentException("Não foi encontrado nenhum servidor."); // Retorna lista vazia se não houver registros
-                        }
-
                         if (await reader.ReadAsync())
                         {
                             return new Servidor
                             {
+                                Id = Convert.ToInt64(reader["Id"].ToString()),
                                 Nome = reader["Nome"].ToString(),
-                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"].ToString()),
-                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"].ToString())
+                                CreatedOn = reader["CreatedOn"] as DateTime? ?? DateTime.MinValue,
+                                UpdateOn = reader["UpdateOn"] as DateTime? ?? DateTime.MinValue
                             };
                         }
-                        return default;
+
+                        return null; // Retorna null se não encontrar o servidor
                     }
                 }
             }
@@ -144,21 +138,18 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
-                        if (!reader.HasRows)
-                        {
-                            throw new ArgumentException("Não foi encontrado nenhum servidor."); // Retorna lista vazia se não houver registros
-                        }
-
                         if (await reader.ReadAsync())
                         {
                             return new Servidor
                             {
+                                Id = Convert.ToInt64(reader["Id"].ToString()),
                                 Nome = reader["Nome"].ToString(),
-                                CreatedOn = Convert.ToDateTime(reader["CreatedOn"].ToString()),
-                                UpdateOn = Convert.ToDateTime(reader["UpdateOn"].ToString())
+                                CreatedOn = reader["CreatedOn"] as DateTime? ?? DateTime.MinValue,
+                                UpdateOn = reader["UpdateOn"] as DateTime? ?? DateTime.MinValue
                             };
                         }
-                        return default;
+
+                        return null; // Retorna null se não encontrar o servidor
                     }
                 }
             }

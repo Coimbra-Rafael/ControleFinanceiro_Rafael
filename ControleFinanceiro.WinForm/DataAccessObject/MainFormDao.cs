@@ -23,24 +23,21 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     // Criar a tabela Clientes
                     using (var command = new SQLiteCommand(
                         @"CREATE TABLE IF NOT EXISTS Clientes
-                                (
-                                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    Nome TEXT NOT NULL,
-                                    Email TEXT,
-                                    Telefone TEXT,
-                                    Cidade TEXT,
-                                    Estado TEXT,
-                                    Endereco TEXT,
-                                    Bairro TEXT,
-                                    Numero TEXT,
-                                    Complemento TEXT,
-                                    ComplementoPagamento TEXT,
-                                    CreatedOn DATETIME,
-                                    UpdateOn DATETIME
-                                )", connection)
-                    {
-
-                    })
+                      (
+                          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          Nome TEXT NOT NULL,
+                          Email TEXT,
+                          Telefone TEXT,
+                          Cidade TEXT,
+                          Estado TEXT,
+                          Endereco TEXT,
+                          Bairro TEXT,
+                          Numero TEXT,
+                          Complemento TEXT,
+                          ComplementoPagamento TEXT,
+                          CreatedOn DATETIME,
+                          UpdateOn DATETIME
+                      )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -48,12 +45,12 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     // Criar a tabela Servidor
                     using (var command = new SQLiteCommand(
                         @"CREATE TABLE IF NOT EXISTS Servidor
-                            (
-                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Nome TEXT NOT NULL,
-                                CreatedOn DATETIME,
-                                UpdateOn DATETIME
-                            )", connection))
+                      (
+                          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          Nome TEXT NOT NULL,
+                          CreatedOn DATETIME,
+                          UpdateOn DATETIME
+                      )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -61,12 +58,13 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     // Criar a tabela ServidorClientes (relacionamento)
                     using (var command = new SQLiteCommand(
                         @"CREATE TABLE IF NOT EXISTS ServidorClientes
-                            (
-                                ServidorId INTEGER NOT NULL,
-                                ClienteId INTEGER NOT NULL,
-                                FOREIGN KEY (ServidorId) REFERENCES Servidor(Id),
-                                FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
-                            )", connection))
+                      (
+                          ServidorId INTEGER NOT NULL,
+                          ClienteId INTEGER NOT NULL,
+                          FOREIGN KEY (ServidorId) REFERENCES Servidor(Id),
+                          FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+                          PRIMARY KEY (ServidorId, ClienteId)
+                      )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -74,18 +72,20 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     // Criar a tabela ContasReceber
                     using (var command = new SQLiteCommand(
                         @"CREATE TABLE IF NOT EXISTS ContasReceber
-                            (
-                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                ClienteId INTEGER NOT NULL,
-                                ValorDesconto REAL NOT NULL,
-                                ValorReceber REAL NOT NULL,
-                                DataAReceber TEXT NOT NULL,
-                                DataRecebimento TEXT NOT NULL,
-                                Observacao TEXT,
-                                CreatedOn DATETIME,
-                                UpdateOn DATETIME,
-                                FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
-                            )", connection))
+                      (
+                          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          ClienteId INTEGER NOT NULL,
+                          ValorDesconto REAL NOT NULL,
+                          ValorReceber REAL NOT NULL,
+                          DataAReceber DATETIME NOT NULL,
+                          DataRecebimento DATETIME NOT NULL,
+                          Observacao TEXT,
+                          Situacao TEXT,
+QuantidadeParcelas INTEGER NOT NULL,
+                          CreatedOn DATETIME,
+                          UpdateOn DATETIME,
+                          FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
+                      )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -93,16 +93,16 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                     // Criar a tabela ContasPagar
                     using (var command = new SQLiteCommand(
                        @"CREATE TABLE IF NOT EXISTS ContasPagar
-                            (
-                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Descricao TEXT NOT NULL,
-                                ValorAPagar REAL NOT NULL,
-                                QuantidadeParcelas INTEGER NOT NULL,
-                                DataAPagar TEXT NOT NULL,
-                                DataPagamento TEXT NOT NULL,
-                                CreatedOn DATETIME,
-                                UpdateOn DATETIME
-                            )", connection))
+                      (
+                          Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          Descricao TEXT NOT NULL,
+                          ValorAPagar REAL NOT NULL,
+                          QuantidadeParcelas INTEGER NOT NULL,
+                          DataAPagar DATETIME NOT NULL,
+                          DataPagamento DATETIME NOT NULL,
+                          CreatedOn DATETIME,
+                          UpdateOn DATETIME
+                      )", connection))
                     {
                         await command.ExecuteNonQueryAsync();
                     }
@@ -114,6 +114,7 @@ namespace ControleFinanceiro.WinForm.DataAccessObject
                 throw new ArgumentException("Erro ao criar banco de dados e tabelas.", ex);
             }
         }
+
 
         public async Task<IEnumerable<ContasReceber>> GetContasAReceberAsync()
         {

@@ -11,7 +11,9 @@ namespace ControleFinanceiro.WinForm.Models
         public decimal ValorReceber { get; set; }
         public DateTime DataAReceber { get; set; }
         public DateTime DataRecebimento { get; set; }
+        public long QuantidadeParcelas { get; set; }
         public string Observacao{ get; set; }
+        public string Situacao { get; set; }
 
         public void Dispose()
         {

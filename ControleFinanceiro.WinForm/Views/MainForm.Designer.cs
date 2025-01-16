@@ -82,6 +82,7 @@
             this.contasPagarFormButton.TabIndex = 4;
             this.contasPagarFormButton.Text = "Contas Pagar";
             this.contasPagarFormButton.UseVisualStyleBackColor = true;
+            this.contasPagarFormButton.Visible = false;
             this.contasPagarFormButton.Click += new System.EventHandler(this.ContasPagarFormButton_Click);
             // 
             // MainForm

@@ -6,9 +6,6 @@
         private System.Windows.Forms.DataGridView dgvContas;
         private System.Windows.Forms.TextBox txtFiltroCliente;
         private System.Windows.Forms.Label lblFiltroCliente;
-        private System.Windows.Forms.Button btnIncluir;
-        private System.Windows.Forms.Button btnAlterar;
-        private System.Windows.Forms.Button btnExcluir;
 
         protected override void Dispose(bool disposing)
         {
@@ -24,16 +21,16 @@
             this.dgvContas = new System.Windows.Forms.DataGridView();
             this.txtFiltroCliente = new System.Windows.Forms.TextBox();
             this.lblFiltroCliente = new System.Windows.Forms.Label();
-            this.btnIncluir = new System.Windows.Forms.Button();
-            this.btnAlterar = new System.Windows.Forms.Button();
-            this.btnExcluir = new System.Windows.Forms.Button();
+            this.incluir = new System.Windows.Forms.Button();
+            this.alterar = new System.Windows.Forms.Button();
+            this.excluir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContas)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvContas
             // 
             this.dgvContas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvContas.Location = new System.Drawing.Point(10, 43);
+            this.dgvContas.Location = new System.Drawing.Point(9, 51);
             this.dgvContas.Name = "dgvContas";
             this.dgvContas.Size = new System.Drawing.Size(480, 217);
             this.dgvContas.TabIndex = 0;
@@ -55,54 +52,63 @@
             this.lblFiltroCliente.TabIndex = 2;
             this.lblFiltroCliente.Text = "Filtrar Cliente:";
             // 
-            // btnIncluir
+            // incluir
             // 
-            this.btnIncluir.Location = new System.Drawing.Point(10, 277);
-            this.btnIncluir.Name = "btnIncluir";
-            this.btnIncluir.Size = new System.Drawing.Size(69, 26);
-            this.btnIncluir.TabIndex = 3;
-            this.btnIncluir.Text = "Incluir";
-            this.btnIncluir.UseVisualStyleBackColor = true;
-            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
+            this.incluir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(164)))), ((int)(((byte)(212)))));
+            this.incluir.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.incluir.Location = new System.Drawing.Point(9, 274);
+            this.incluir.Name = "incluir";
+            this.incluir.Size = new System.Drawing.Size(97, 36);
+            this.incluir.TabIndex = 6;
+            this.incluir.Text = "Incluir";
+            this.incluir.UseVisualStyleBackColor = false;
+            this.incluir.Click += new System.EventHandler(this.incluir_Click);
             // 
-            // btnAlterar
+            // alterar
             // 
-            this.btnAlterar.Location = new System.Drawing.Point(86, 277);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(69, 26);
-            this.btnAlterar.TabIndex = 4;
-            this.btnAlterar.Text = "Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = true;
-            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
+            this.alterar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(171)))), ((int)(((byte)(78)))));
+            this.alterar.Location = new System.Drawing.Point(112, 274);
+            this.alterar.Name = "alterar";
+            this.alterar.Size = new System.Drawing.Size(97, 36);
+            this.alterar.TabIndex = 7;
+            this.alterar.Text = "Alterar";
+            this.alterar.UseVisualStyleBackColor = false;
+            this.alterar.Click += new System.EventHandler(this.alterar_Click);
             // 
-            // btnExcluir
+            // excluir
             // 
-            this.btnExcluir.Location = new System.Drawing.Point(163, 277);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(69, 26);
-            this.btnExcluir.TabIndex = 5;
-            this.btnExcluir.Text = "Excluir";
-            this.btnExcluir.UseVisualStyleBackColor = true;
-            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
+            this.excluir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(120)))), ((int)(((byte)(86)))));
+            this.excluir.Location = new System.Drawing.Point(215, 274);
+            this.excluir.Name = "excluir";
+            this.excluir.Size = new System.Drawing.Size(97, 36);
+            this.excluir.TabIndex = 8;
+            this.excluir.Text = "Excluir";
+            this.excluir.UseVisualStyleBackColor = false;
+            this.excluir.Click += new System.EventHandler(this.excluir_Click);
             // 
             // ContasReceberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
-            this.ClientSize = new System.Drawing.Size(501, 313);
-            this.Controls.Add(this.btnExcluir);
-            this.Controls.Add(this.btnAlterar);
-            this.Controls.Add(this.btnIncluir);
+            this.ClientSize = new System.Drawing.Size(501, 318);
+            this.Controls.Add(this.incluir);
+            this.Controls.Add(this.alterar);
+            this.Controls.Add(this.excluir);
             this.Controls.Add(this.lblFiltroCliente);
             this.Controls.Add(this.txtFiltroCliente);
             this.Controls.Add(this.dgvContas);
             this.Name = "ContasReceberForm";
             this.Text = "Contas a Receber";
+            this.Load += new System.EventHandler(this.ContasReceberForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvContas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
+        private System.Windows.Forms.Button incluir;
+        private System.Windows.Forms.Button alterar;
+        private System.Windows.Forms.Button excluir;
     }
 }
